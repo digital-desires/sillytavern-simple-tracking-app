@@ -4,6 +4,8 @@ A [SillyTavern](https://github.com/SillyTavern/SillyTavern) extension that autom
 
 ---
 
+<img width="2551" height="1030" alt="Capture d&#39;écran 2026-04-09 113319" src="https://github.com/user-attachments/assets/0d9460f2-d388-4626-a377-38b712ed3c01" />
+
 ## What it does
 
 ### Stat Tracking
@@ -19,7 +21,7 @@ You define stats one per line using plain text, with `{{char}}` and `{{user}}` m
 Current location
 Relationship tension
 ```
-
+<img width="514" height="903" alt="Capture d&#39;écran 2026-04-09 113849" src="https://github.com/user-attachments/assets/05504736-74e0-40b9-9d80-c8eff43f988e" />
 Stats are stored **per chat** inside SillyTavern's own metadata system, so each conversation has its own independent history. Switch to a different chat and you see that chat's stats. Come back and your values are exactly where you left them.
 
 ### Scene Image Generation (xAI)
@@ -52,10 +54,14 @@ The scene appears in its own floating window. You choose the aspect ratio (16:9 
 - Auto-detects which xAI image models your account has access to (Detect button)
 - Position remembered between sessions
 
+<img width="594" height="719" alt="Capture d&#39;écran 2026-04-09 113945" src="https://github.com/user-attachments/assets/dd573ab4-9127-4ee3-a4e9-1d945b178fe4" />
+
 ### Profile System
 - Create multiple named stat profiles (e.g. one per character type or genre)
 - **Character → Profile binding** — link a character name to a profile and the tracker switches automatically when you load that character's chat
 - Profiles are global settings, stat values are per-chat
+
+<img width="623" height="487" alt="Capture d&#39;écran 2026-04-09 114109" src="https://github.com/user-attachments/assets/c778d314-7d34-45aa-9ada-0167f0b0e614" />
 
 ### Scene Prompt Templates
 The full LLM instruction that generates scene descriptions is **fully editable** — it's a textarea in settings, not hardcoded. Use `{location}` and `{messages}` as placeholders. Save, load, and delete named templates so you can switch between a gritty noir style and a high fantasy style without rewriting the prompt each time.
