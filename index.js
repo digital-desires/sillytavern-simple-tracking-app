@@ -1331,13 +1331,14 @@ function ensureSceneWindow() {
 
     win.querySelector('#sst-scene-download')?.addEventListener('click', async () => {
         const img = win.querySelector('#sst-scene-img');
-        const src = img?.src || '';
+        const activeEntry = sceneHistory[sceneHistoryIndex];
+        const rawAttrSrc = img?.getAttribute('src') || '';
+        const src = activeEntry?.url || rawAttrSrc || img?.src || '';
         if (!src) {
             safeToast('warning', 'No scene image to download yet.');
             return;
         }
 
-        const activeEntry = sceneHistory[sceneHistoryIndex];
         const label = (activeEntry?.label || 'scene')
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
