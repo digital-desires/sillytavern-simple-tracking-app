@@ -1214,6 +1214,9 @@ function ensureSceneWindow() {
                 <button id="sst-scene-regen" class="sst-win-btn" title="Regenerate image">
                     <i class="fa-solid fa-rotate-right"></i>
                 </button>
+                <button id="sst-scene-download" class="sst-win-btn" title="Download image">
+                    <i class="fa-solid fa-download"></i>
+                </button>
                 <button id="sst-scene-close" class="sst-win-btn sst-win-btn-close" title="Close">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -1323,6 +1326,56 @@ function ensureSceneWindow() {
             await renderSceneImage(result.description, result);
         } catch (err) {
             await renderSceneImage(loc, { locationValue: loc, messagesCount: 0, messagesText: '' });
+        }
+    });
+
+    win.querySelector('#sst-scene-download')?.addEventListener('click', async () => {
+        const img = win.querySelector('#sst-scene-img');
+        const src = img?.src || '';
+        if (!src) {
+            safeToast('warning', 'No scene image to download yet.');
+            return;
+        }
+
+        const activeEntry = sceneHistory[sceneHistoryIndex];
+        const label = (activeEntry?.label || 'scene')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .slice(0, 48) || 'scene';
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `sst-${label}-${stamp}.png`;
+
+        try {
+            let downloadHref = src;
+            let revokeUrl = null;
+
+            // xAI may return raw base64 in b64_json format; normalize to data URL first.
+            if (!/^https?:|^data:/i.test(src)) {
+                downloadHref = `data:image/png;base64,${src}`;
+            }
+
+            // For remote URLs, fetch as blob so the browser consistently downloads with our filename.
+            if (/^https?:/i.test(downloadHref)) {
+                const response = await fetch(downloadHref);
+                if (!response.ok) throw new Error(`Image fetch failed (${response.status})`);
+                const blob = await response.blob();
+                revokeUrl = URL.createObjectURL(blob);
+                downloadHref = revokeUrl;
+            }
+
+            const a = document.createElement('a');
+            a.href = downloadHref;
+            a.download = filename;
+            a.rel = 'noopener noreferrer';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            if (revokeUrl) setTimeout(() => URL.revokeObjectURL(revokeUrl), 1000);
+            safeToast('success', 'Scene image download started.');
+        } catch (err) {
+            console.error('Scene image download failed:', err);
+            safeToast('error', 'Could not download image. Try opening it in a new tab.');
         }
     });
 }
