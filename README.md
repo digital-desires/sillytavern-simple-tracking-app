@@ -1,3 +1,14 @@
+> ## ⚠️ No longer maintained
+>
+> This extension has been superseded by **NDS: Tracker**, part of the Narrative
+> Director Suite tool set.
+>
+> This repository remains public so existing installations continue to work, but
+> it will not receive further updates, fixes, or compatibility patches for newer
+> SillyTavern releases.
+>
+> _Final version: April 2026_
+
 # Simple Stat Tracker
 
 A [SillyTavern](https://github.com/SillyTavern/SillyTavern) extension that automatically tracks roleplay character stats from your chat, generates AI scene images when your location changes, and displays everything in clean floating windows that stay out of your way while you write.
